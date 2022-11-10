@@ -1,6 +1,7 @@
 ﻿namespace TendersApp.Users
 {
-    public class Customer
+    public class Customer : User
     {
+        public string Division { get; set; }
     }
 }

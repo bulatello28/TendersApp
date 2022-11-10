@@ -1,0 +1,23 @@
+﻿
+@using TendersApp.Data
+@using TendersApp.Users
+@inject IJSRuntime JsRuntime
+
+<br /><br />
+<label>ОГРН:</label> <input placeholder="Ogrn" @bind-value="@ogrn"></input>
+<br /><br />
+<label>ИНН:</label> <input placeholder="Inn" @bind-value="@inn"></input>
+<br /><br />
+<label>КПП:</label> <input placeholder="Kpp" @bind-value="@kpp"></input>
+<br /><br />
+<label>Адрес:</label> <input placeholder="Adress" @bind-value="@adress"></input>
+<br /><br />
+<label>Директор:</label> <input placeholder="Director" @bind-value="@director"></input>
+<br /><br />
+@code {
+    string ogrn = "";
+    string inn = "";
+    string kpp = "";
+    string adress = "";
+    string director = "";
+}

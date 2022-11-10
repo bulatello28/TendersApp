@@ -1,0 +1,48 @@
+﻿@page "/registration"
+
+<PageTitle>Registration</PageTitle>
+
+@using TendersApp.Data
+@using TendersApp.Users
+@using TendersApp.Components
+@inject IJSRuntime JsRuntime
+
+<div class="registr-user">
+    <label>Логин:</label> <input placeholder="Login" @bind-value="@login"></input>
+    <br /><br />
+    <label>Пароль:</label> <input placeholder="Password" @bind-value="@password"></input>
+    <br /><br />
+    <label>Email:</label> <input placeholder="Email" @bind-value="@email"></input>
+    <br /><br />
+    <label>Имя:</label> <input placeholder="Login" @bind-value="@name"></input>
+    <br /><br />
+    <label>Роль</label> 
+    <select @bind="@role">
+        <option value="Заказчик">Заказчик</option>
+        <option value="Застройщик">Застройщик</option>
+        <option value="Проектировщик">Проектировщик</option>
+    </select>
+ @if (role == "Заказчик")
+    {
+        <CustomerComponent></CustomerComponent>
+    }
+    else if (role == "Проектировщик")
+    {
+        <DesignerComponent></DesignerComponent>
+    }
+    else if (role == "Застройщик")
+    {
+        <DeveloperComponent></DeveloperComponent>
+    }
+</div>
+
+
+@code {
+    string role = "";
+    string name = "";
+    string login = "";
+    string password = "";
+    string email = "";
+
+
+}

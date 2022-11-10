@@ -1,10 +1,12 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using TendersApp.Users;
 
 namespace TendersApp.Data
 {
     public class MongoDb
     {
+        public User? currentUser;
         public static void AddUserToDataBase(User user)
         {
             var client = new MongoClient("mongodb://localhost");

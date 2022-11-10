@@ -1,0 +1,12 @@
+﻿
+@using TendersApp.Data
+@using TendersApp.Users
+@inject IJSRuntime JsRuntime
+
+<br /><br />
+<label>Область:</label> <input placeholder="Area" @bind-value="@area"></input>
+<br /><br />
+
+@code {
+    string area = "";
+}
