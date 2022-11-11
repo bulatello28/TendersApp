@@ -7,16 +7,21 @@
 @using TendersApp.Components
 @inject IJSRuntime JsRuntime
 
-<div class="registr-user">
-    <label>Логин:</label> <input placeholder="Login" @bind-value="@login"></input>
+<div class="register-user">
+    <label>Логин:</label> <input placeholder="Логин" @bind-value="@login"></input>
     <br /><br />
-    <label>Пароль:</label> <input placeholder="Password" @bind-value="@password"></input>
+    <label>Пароль:</label> <input placeholder="Пароль" @bind-value="@password"></input>
     <br /><br />
     <label>Email:</label> <input placeholder="Email" @bind-value="@email"></input>
     <br /><br />
-    <label>Имя:</label> <input placeholder="Login" @bind-value="@name"></input>
+    <label>Имя:</label> <input placeholder="Имя" @bind-value="@firstName"></input>
     <br /><br />
-    <label>Роль</label> 
+    <label>Фамилия:</label> <input placeholder="Фамилия" @bind-value="@lastName" />
+    <br /><br />
+    <label>Номер:</label> <input placeholder="Номер" @bind-value="@phoneNumber" />
+    <br /><br />
+    <label>Выберите вашу роль:</label>
+
     <select @bind="@role">
         <option value="Заказчик">Заказчик</option>
         <option value="Застройщик">Застройщик</option>
@@ -24,25 +29,70 @@
     </select>
  @if (role == "Заказчик")
     {
-        <CustomerComponent></CustomerComponent>
+        <CustomerComponent @ref="customerComponent"></CustomerComponent>
     }
-    else if (role == "Проектировщик")
+@if (role == "Проектировщик")
     {
-        <DesignerComponent></DesignerComponent>
+        <DesignerComponent @ref="designerComponent"></DesignerComponent>
     }
-    else if (role == "Застройщик")
+@if (role == "Застройщик")
     {
-        <DeveloperComponent></DeveloperComponent>
+        <DeveloperComponent @ref="developerComponent"></DeveloperComponent>
     }
+    <br /><br />
+    <button type="submit" @onclick="() => AddToDataBase()">Sign Up</button>
 </div>
 
 
 @code {
     string role = "";
-    string name = "";
+    string firstName = "";
     string login = "";
     string password = "";
     string email = "";
+    string lastName = "";
+    string phoneNumber = "";
 
+    CustomerComponent customerComponent;
+    DeveloperComponent developerComponent;
+    DesignerComponent designerComponent;
+
+    private async void AddToDataBase()
+    {
+        if (!IsFieldsAreEmpty())
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "НЕ ВСЕ ПОЛЯ ЗАПОЛНЕНЫ!");
+            return;
+        }
+
+        if (role == "Заказчик")
+        {
+            MongoDb.AddCustomerToDataBase(new Customer(login, password, firstName, lastName, email,
+            phoneNumber, customerComponent.division));
+        }
+        else if (role == "Проектировщик")
+        {
+            MongoDb.AddDesignerToDataBase(new Designer(login, password, firstName, lastName, email,
+            phoneNumber, designerComponent.organisation, designerComponent.ogrn, designerComponent.inn, designerComponent.kpp,
+            designerComponent.adress, designerComponent.director, designerComponent.mainEngineer));
+        }
+        else if (role == "Застройщик")
+        {
+            MongoDb.AddDeveloperToDataBase(new Developer(login, password, firstName, lastName, email,
+            phoneNumber, developerComponent.organisation, developerComponent.ogrn, developerComponent.inn, developerComponent.kpp,
+            developerComponent.adress, developerComponent.director));
+        }
+
+    }
+
+    private bool IsFieldsAreEmpty()
+    {
+        if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(firstName) || String.IsNullOrEmpty(lastName)
+        || String.IsNullOrEmpty(login) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(phoneNumber) || role == "")
+        {
+            return false;
+        }
+        return true;
+    }
 
 }

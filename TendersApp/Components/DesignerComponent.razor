@@ -2,26 +2,28 @@
 @using TendersApp.Data
 @using TendersApp.Users
 @inject IJSRuntime JsRuntime
-
 <br /><br />
-<label>ОГРН:</label> <input placeholder="Ogrn" @bind-value="@ogrn"></input>
+<label>Организация:</label><input placeholder="Организация" @bind-value="organisation" />
 <br /><br />
-<label>ИНН:</label> <input placeholder="Inn" @bind-value="@inn"></input>
+<label>ОГРН:</label> <input placeholder="ОГРН" @bind-value="@ogrn"></input>
 <br /><br />
-<label>КПП:</label> <input placeholder="Kpp" @bind-value="@kpp"></input>
+<label>ИНН:</label> <input placeholder="ИНН" @bind-value="@inn"></input>
 <br /><br />
-<label>Адрес:</label> <input placeholder="Adress" @bind-value="@adress"></input>
+<label>КПП:</label> <input placeholder="КПП" @bind-value="@kpp"></input>
 <br /><br />
-<label>Директор:</label> <input placeholder="Director" @bind-value="@director"></input>
+<label>Адрес:</label> <input placeholder="Адрес" @bind-value="@adress"></input>
 <br /><br />
-<label>Главный инженер:</label> <input placeholder="MainEngineer" @bind-value="@mainEngineer"></input>
+<label>Директор:</label> <input placeholder="Директор" @bind-value="@director"></input>
+<br /><br />
+<label>Главный инженер:</label> <input placeholder="Главный Инженер" @bind-value="@mainEngineer"></input>
 <br /><br />
 
 @code {
-    string ogrn = "";
-    string inn = "";
-    string kpp = "";
-    string adress = "";
-    string director = "";
-    string mainEngineer = "";
+    public string organisation = "";
+    public string ogrn = "";
+    public string inn = "";
+    public string kpp = "";
+    public string adress = "";
+    public string director = "";
+    public string mainEngineer = "";
 }

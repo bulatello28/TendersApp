@@ -2,11 +2,11 @@
 @using TendersApp.Data
 @using TendersApp.Users
 @inject IJSRuntime JsRuntime
-
+@inject TendersApp.Data.MongoDb mongoConnetction;
 <br /><br />
-<label>Область:</label> <input placeholder="Area" @bind-value="@area"></input>
+<label>Область:</label> <input placeholder="Область" @bind-value="@division"></input>
 <br /><br />
 
 @code {
-    string area = "";
+    public string division = "";
 }

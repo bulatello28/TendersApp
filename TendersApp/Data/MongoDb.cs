@@ -7,21 +7,35 @@ namespace TendersApp.Data
     public class MongoDb
     {
         public User? currentUser;
-        public static void AddUserToDataBase(User user)
+        static MongoClient client = new MongoClient("mongodb://localhost");
+        static IMongoDatabase database = client.GetDatabase("Users");
+
+        public void Save<TEntity>(TEntity entity)
+        {
+            var collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
+            collection.InsertOne(entity);
+        }
+        public static void AddCustomerToDataBase(Customer customer)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("Users");
-            var collection = database.GetCollection<User>("UserCollection");
-            collection.InsertOne(user);
+            var collection = database.GetCollection<User>("CustomerCollection");
+            collection.InsertOne(customer);
         }
 
-        public static void ReplaceOneInDataBase(User user)
+        public static void AddDesignerToDataBase(Designer designer)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("Users");
-            var filter = new BsonDocument("_id", user._id);
-            var collection = database.GetCollection<User>("UserCollection");
-            collection.ReplaceOne(filter, user);
+            var collection = database.GetCollection<User>("DesignerCollection");
+            collection.InsertOne(designer);
+        }
+        public static void AddDeveloperToDataBase(Developer developer)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var collection = database.GetCollection<User>("DeveloperCollection");
+            collection.InsertOne(developer);
         }
     }
 }

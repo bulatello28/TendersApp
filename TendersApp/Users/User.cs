@@ -14,5 +14,15 @@ namespace TendersApp.Users
         public string Login { get; set; }
         public string Password { get; set; }
 
+        public User(string firstName, string lastName, string email, string phoneNumber, string login, string password)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            Login = login;
+            Password = password;
+        }
+
     }
 }
