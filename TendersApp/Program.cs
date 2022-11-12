@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddSingleton<MongoDb>();
+builder.Services.AddScoped<MongoDb>();
 
 var app = builder.Build();
 

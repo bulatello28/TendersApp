@@ -87,6 +87,33 @@ namespace TendersApp.Data
             return null;
         }
 
-        
+        public void UpdateCustomer(Customer user)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = Builders<Customer>.Filter.Eq("Login", user.Login);
+            var collection = database.GetCollection<Customer>("CustomerCollection");
+            collection.ReplaceOne(filter, user);
+        }
+
+        public void UpdateDeveloper(Developer user)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = Builders<Developer>.Filter.Eq("Login", user.Login);
+            var collection = database.GetCollection<Developer>("DeveloperCollection");
+            collection.ReplaceOne(filter, user);
+        }
+
+        public void UpdateDesigner(Designer user)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = Builders<Designer>.Filter.Eq("Login", user.Login);
+            var collection = database.GetCollection<Designer>("DesignerCollection");
+            collection.ReplaceOne(filter, user);
+        }
+
+
     }
 }

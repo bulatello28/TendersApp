@@ -2,11 +2,24 @@
 @using TendersApp.Data
 @using TendersApp.Users
 @inject IJSRuntime JsRuntime
-@inject TendersApp.Data.MongoDb mongoConnetction;
+@inject TendersApp.Data.MongoDb MongoDb
+<EditForm Model="@currentCustomer" OnValidSubmit="@(() => SaveData())">
 <br /><br />
-<label>Область:</label> <input placeholder="Область" @bind-value="@division"></input>
+<label>Область:</label> <input placeholder="Область" @bind-value="@currentCustomer.Division"></input>
 <br /><br />
+<label>Имя:</label> <input placeholder="Область" @bind-value="@currentCustomer.FirstName"></input>
+<br /><br />
+<label>Фамилия:</label> <input placeholder="Область" @bind-value="@currentCustomer.LastName"></input>
+<br /><br />
+<button type="submit">Сохранить изменения</button>
+</EditForm>
 
 @code {
-    public string division = "";
-}
+    [Parameter]
+    public Customer currentCustomer { get; set; }
+
+    private void SaveData()
+    {
+        MongoDb.UpdateCustomer(currentCustomer);
+    }
+ }

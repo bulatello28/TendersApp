@@ -10,9 +10,9 @@
         public string Director { get; set; }
         public string MainEngineer { get; set; }
 
-        public Designer(string firstName, string lastName, string email, string phoneNumber, string login,
-            string password, string organisation, string ogrn, string inn, string kpp, string adress, string director, string mainEngineer)
-            : base(firstName, lastName, email, phoneNumber, login, password)
+        public Designer(string email, string phoneNumber, string login,
+            string password, Enums.Roles role, string organisation, string ogrn, string inn, string kpp, string adress, string director, string mainEngineer)
+            : base(email, phoneNumber, login, password, role)
         {
             Organisation = organisation;
             Ogrn = ogrn;
@@ -24,8 +24,8 @@
 
         }
 
-        public Designer(string firstName, string lastName, string email, string phoneNumber,
-            string login, string password) : base(firstName, lastName, email, phoneNumber, login, password)
+        public Designer(string email, string phoneNumber,
+            string login, string password, Enums.Roles role) : base(email, phoneNumber, login, password, role)
         {
 
         }

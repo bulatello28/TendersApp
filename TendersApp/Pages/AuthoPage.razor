@@ -7,8 +7,10 @@
 @using TendersApp.Components
 @inject IJSRuntime JsRuntime
 @inject MongoDb MongoDb
+@inject NavigationManager navManager
 
 <div>
+<form onsubmit="@TryFindUser">
 <label>Логин:</label>
 <br /><br />
 <input placeholder="Логин" @bind-value="@user.Login"/>
@@ -17,6 +19,7 @@
 <br /><br />
 <input placeholder="Пароль" @bind-value="@user.Password" />
 <button type="submit">Sign In</button>
+</form>
 </div>
 
 @code {
@@ -34,14 +37,14 @@
         }
         else
         {
-            if (tryToFoundUser.Password != user.Password)
+            if (tryToFoundUser.Password == user.Password)
             {
-                await JsRuntime.InvokeVoidAsync("alert", "Пароль не подходит");
-                return;
+                MongoDb.currentUser = MongoDb.CheckLogins(user.Login);
+                navManager.NavigateTo("/personalPage");
             }
             else
             {
-                MongoDb.currentUser = MongoDb.CheckLogins(user.Login);
+                await JsRuntime.InvokeVoidAsync("alert", "Неверный пароль");
             }
         }
     }

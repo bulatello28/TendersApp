@@ -9,17 +9,13 @@
 @inject MongoDb MongoDb
 
 <div class="register-user">
-    <label>Логин:</label> <input placeholder="Логин" @bind-value="@login"></input>
+    <label>Логин:</label> <input placeholder="Логин" @bind-value="@user.Login"></input>
     <br /><br />
-    <label>Пароль:</label> <input placeholder="Пароль" @bind-value="@password"></input>
+    <label>Пароль:</label> <input placeholder="Пароль" @bind-value="@user.Password"></input>
     <br /><br />
-    <label>Email:</label> <input placeholder="Email" @bind-value="@email"></input>
+    <label>Email:</label> <input placeholder="Email" @bind-value="@user.Email"></input>
     <br /><br />
-    <label>Имя:</label> <input placeholder="Имя" @bind-value="@firstName"></input>
-    <br /><br />
-    <label>Фамилия:</label> <input placeholder="Фамилия" @bind-value="@lastName" />
-    <br /><br />
-    <label>Номер:</label> <input placeholder="Номер" @bind-value="@phoneNumber" />
+    <label>Номер:</label> <input placeholder="Номер" @bind-value="@user.PhoneNumber" />
     <br /><br />
     <label>Выберите вашу роль:</label>
 
@@ -34,12 +30,14 @@
 
 @code {
     string role = "";
-    string firstName = "";
+    /*string firstName = "";
     string login = "";
     string password = "";
     string email = "";
     string lastName = "";
-    string phoneNumber = "";
+    string phoneNumber = "";*/
+
+    User user = new User();
 
     CustomerComponent customerComponent;
     DeveloperComponent developerComponent;
@@ -47,38 +45,23 @@
 
     private async void AddToDataBase()
     {
-        if (!IsFieldsAreEmpty())
-        {
-            await JsRuntime.InvokeVoidAsync("alert", "НЕ ВСЕ ПОЛЯ ЗАПОЛНЕНЫ!");
-            return;
-        }
 
         if (role == "Заказчик")
         {
-            MongoDb.AddCustomerToDataBase(new Customer(login, password, firstName, lastName, email,
-            phoneNumber));
+            MongoDb.AddCustomerToDataBase(new Customer(user.Login, user.Password, user.Email,
+            user.PhoneNumber, Enums.Roles.Customer));
         }
         else if (role == "Проектировщик")
         {
-            MongoDb.AddDesignerToDataBase(new Designer(login, password, firstName, lastName, email,
-            phoneNumber));
+            MongoDb.AddDesignerToDataBase(new Designer(user.Login, user.Password, user.Email,
+            user.PhoneNumber, Enums.Roles.Designer));
         }
         else if (role == "Застройщик")
         {   
-            MongoDb.AddDeveloperToDataBase(new Developer(login, password, firstName, lastName, email,
-            phoneNumber));
+            MongoDb.AddDeveloperToDataBase(new Developer(user.Login, user.Password, user.Email,
+            user.PhoneNumber, Enums.Roles.Developer));
         }
 
-    }
-
-    private bool IsFieldsAreEmpty()
-    {
-        if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(firstName) || String.IsNullOrEmpty(lastName)
-        || String.IsNullOrEmpty(login) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(phoneNumber) || role == "")
-        {
-            return false;
-        }
-        return true;
     }
 
 }
