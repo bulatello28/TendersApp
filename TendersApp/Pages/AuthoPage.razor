@@ -1,0 +1,48 @@
+﻿@page "/authorization"
+
+<PageTitle>Авторизация</PageTitle>
+
+@using TendersApp.Data
+@using TendersApp.Users
+@using TendersApp.Components
+@inject IJSRuntime JsRuntime
+@inject MongoDb MongoDb
+
+<div>
+<label>Логин:</label>
+<br /><br />
+<input placeholder="Логин" @bind-value="@user.Login"/>
+<br /><br />
+<label>Пароль:</label>
+<br /><br />
+<input placeholder="Пароль" @bind-value="@user.Password" />
+<button type="submit">Sign In</button>
+</div>
+
+@code {
+    User user = new User();
+
+    public async Task TryFindUser()
+    {
+        User tryToFoundUser;
+        tryToFoundUser = MongoDb.CheckLogins(user.Login);
+
+        if (tryToFoundUser is null)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "Нет такого пользователся");
+            return;
+        }
+        else
+        {
+            if (tryToFoundUser.Password != user.Password)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", "Пароль не подходит");
+                return;
+            }
+            else
+            {
+                MongoDb.currentUser = MongoDb.CheckLogins(user.Login);
+            }
+        }
+    }
+}

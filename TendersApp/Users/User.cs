@@ -24,5 +24,10 @@ namespace TendersApp.Users
             Password = password;
         }
 
+        public User()
+        {
+            
+        }
+
     }
 }

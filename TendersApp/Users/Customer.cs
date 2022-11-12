@@ -10,5 +10,11 @@
         {
             Division = division;
         }
+
+        public Customer(string firstName, string lastName, string email, string phoneNumber,
+            string login, string password) : base(firstName, lastName, email, phoneNumber, login, password)
+        {
+
+        }
     }
 }

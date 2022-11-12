@@ -6,6 +6,7 @@
 @using TendersApp.Users
 @using TendersApp.Components
 @inject IJSRuntime JsRuntime
+@inject MongoDb MongoDb
 
 <div class="register-user">
     <label>Логин:</label> <input placeholder="Логин" @bind-value="@login"></input>
@@ -27,19 +28,6 @@
         <option value="Застройщик">Застройщик</option>
         <option value="Проектировщик">Проектировщик</option>
     </select>
- @if (role == "Заказчик")
-    {
-        <CustomerComponent @ref="customerComponent"></CustomerComponent>
-    }
-@if (role == "Проектировщик")
-    {
-        <DesignerComponent @ref="designerComponent"></DesignerComponent>
-    }
-@if (role == "Застройщик")
-    {
-        <DeveloperComponent @ref="developerComponent"></DeveloperComponent>
-    }
-    <br /><br />
     <button type="submit" @onclick="() => AddToDataBase()">Sign Up</button>
 </div>
 
@@ -68,19 +56,17 @@
         if (role == "Заказчик")
         {
             MongoDb.AddCustomerToDataBase(new Customer(login, password, firstName, lastName, email,
-            phoneNumber, customerComponent.division));
+            phoneNumber));
         }
         else if (role == "Проектировщик")
         {
             MongoDb.AddDesignerToDataBase(new Designer(login, password, firstName, lastName, email,
-            phoneNumber, designerComponent.organisation, designerComponent.ogrn, designerComponent.inn, designerComponent.kpp,
-            designerComponent.adress, designerComponent.director, designerComponent.mainEngineer));
+            phoneNumber));
         }
         else if (role == "Застройщик")
-        {
+        {   
             MongoDb.AddDeveloperToDataBase(new Developer(login, password, firstName, lastName, email,
-            phoneNumber, developerComponent.organisation, developerComponent.ogrn, developerComponent.inn, developerComponent.kpp,
-            developerComponent.adress, developerComponent.director));
+            phoneNumber));
         }
 
     }
