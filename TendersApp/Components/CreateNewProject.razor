@@ -1,0 +1,219 @@
+﻿
+@using TendersApp.Data
+@using TendersApp.Users
+@using TendersApp.Components
+@using TendersApp.Documents
+@inject IJSRuntime JsRuntime
+@inject MongoDb MongoDb
+@inject NavigationManager nManager
+@inject FileSystemService fileSysServ
+@inject TendersApp.Data.ProjectService projectService
+
+@if (department == "Водоснабжения")
+{
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Требуемый</th>
+                </tr>
+            </thead>
+        <tbody>
+        @foreach(var doc in docs)
+        {
+            <tr>
+                <td>@doc.Name</td>
+                <td><input type="checkbox" @bind-value="doc.IsRequired" /></td>
+                <td><button class="btn btn-primary mb-3">Download</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Требуемый</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var doc in projecterDocs)
+        {
+            <tr>
+                <td>@doc.Name</td>
+                <td><input type="checkbox" @bind-value="doc.IsRequired" /></td>
+                <td><button class="btn btn-primary mb-3">Download</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name of field</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+    </table>
+}
+
+@if (department == "Газификация")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Требуемый</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(var doc in docs)
+        {
+            <tr>
+                <td>@doc.Name</td>
+                <td><input type="checkbox" @bind-value="doc.IsRequired" /></td>
+                <td><button class="btn btn-primary mb-3">Download</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Требуемый</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var doc in projecterDocs)
+        {
+            <tr>
+                <td>@doc.Name</td>
+                <td><input type="checkbox" @bind-value="doc.IsRequired" /></td>
+                <td><button class="btn btn-primary mb-3">Download</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+<form class="row g-3" onsubmit="@(() => CloseComp())">
+
+    <div class="col-md-4">
+        <input class="form-control" placeholder="Название проекта" @bind-value="projectName" required />
+    </div>
+
+    <div class="col-md-4">
+    <select class="form-control" required @bind="selectedDeveloper">
+    <option disabled>Выберите застройщика</option>
+    @foreach (var developer in MongoDb.FindDevelopers())
+    {
+        <option value="@developer.Login">@developer.Organisation</option>
+    }
+    </select>
+    </div>
+
+    <div class="col-md-4">
+    <select class="form-control" required @bind="selectedProjecter">
+        <option disabled>Выберите застройщика</option>
+    @foreach (var projecter in MongoDb.FindProjecters())
+    {
+        <option value="@projecter.Login">@projecter.Organisation</option>
+    }
+    </select>
+    </div>
+
+<br />
+<button type="submit">Add project</button>
+</form>
+
+@code {
+    [Parameter]
+    public string? department { get; set; }
+
+    ListDocuments defDoc = new ListDocuments();
+
+    List<Document>? docs;
+    List<Document>? projecterDocs;
+
+    string selectedProjecter;
+    string selectedDeveloper;
+    string projectName;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        fileSysServ.currentProject = new Project();
+        docs = new();
+        projecterDocs = new();
+
+        if(department == "Газификация")
+        {
+            foreach (var doc in defDoc.docsGas)
+            {
+                docs.Add(new Document
+                    {
+                        Name = doc,
+                        IsRequired = false
+                    });
+            }
+            foreach(var doc in defDoc.projecterDocs)
+            {
+                projecterDocs.Add(new Document
+                {
+                    Name = doc,
+                    IsRequired = false,
+                });
+            }
+
+        }
+        else
+        {
+            foreach (var doc in defDoc.docsWater)
+            {
+                docs.Add(new Document
+                {
+                    Name = doc,
+                    IsRequired = false
+                });
+            }
+
+            foreach (var doc in defDoc.projecterDocs)
+            {
+                projecterDocs.Add(new Document
+                    {
+                        Name = doc,
+                        IsRequired = false
+                    });
+            }
+
+        }
+    }
+        private byte[] GetByteArray(string file)
+    {
+        return fileSysServ.GetByteArrayFromFile(file);
+    }
+
+     public void CloseComp()
+    {
+        if(selectedProjecter is null || selectedDeveloper is null)
+        {
+            JsRuntime.InvokeVoidAsync("alert", "Customer or developer aren't set!");
+            return;
+        }
+        fileSysServ.currentProject.Name = projectName;
+        fileSysServ.currentProject.DesignerId = (MongoDb.CheckLoginForDesigner(selectedProjecter)).Id;
+        fileSysServ.currentProject.DeveloperId = (MongoDb.CheckLoginForDeveloper(selectedDeveloper)).Id;
+        fileSysServ.currentProject.CustomerId = (MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login)).Id;
+        fileSysServ.currentProject.Documents = docs;
+        fileSysServ.currentProject.ProjecterDocuments = projecterDocs;
+
+        projectService.AddDocsToDataBase(docs);
+        projectService.AddProjecterDocsToDataBase(projecterDocs);
+        projectService.AddToDataBase(fileSysServ.currentProject);
+    }
+
+}

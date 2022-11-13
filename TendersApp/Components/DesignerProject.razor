@@ -1,0 +1,51 @@
+﻿
+@using TendersApp.Data
+@using TendersApp.Users
+@using Microsoft.AspNetCore.Mvc
+@inject FileSystemService fileSysServ
+@inject MongoDb mongoConnection
+@inject TendersApp.Data.ProjectService projectService
+@inject IJSRuntime JS
+@inject NavigationManager nManager
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Doc name</th>
+            <th>File name</th>
+            <th>Requirement</th>
+            <th>Download</th>
+            <th>Upload</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var doc in fileSysServ.currentProject.Documents)
+    {
+        <tr>
+            <td>@doc.Name</td>
+            <td>@doc.FileName</td>
+            <td><input type="checkbox" @bind="doc.IsRequired" /></td>
+            <td><a class="form-control" href="documents/@doc.FileName" download="@doc.FileName">Download</a></td>
+            <td><InputFile accept=".pdf" class="btn btn-primary mb-3"  OnChange="((e) => fileSysServ.LoadFiles(e, doc))">Upload</InputFile></td>
+        </tr>
+    }
+    </tbody>
+</table>
+<button @onclick="CloseComp" class="btn btn-primary mb-3">Save changes</button>
+
+@code {
+    string currentDepartment;
+
+    protected override void OnInitialized()
+    {
+        currentDepartment = mongoConnection.FindCustomerById(fileSysServ.currentProject.CustomerId).Division;
+        base.OnInitialized();
+    }
+
+    public void CloseComp()
+    {
+        projectService.UpdateProjectInDataBase(fileSysServ.currentProject);
+        nManager.NavigateTo("/projectsPage");
+    }
+}

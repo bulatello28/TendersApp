@@ -7,13 +7,12 @@
 @using TendersApp.Components
 @inject IJSRuntime JsRuntime
 @inject MongoDb MongoDb
-
 <div class="register-user">
-    <label>Логин:</label> <input placeholder="Логин" @bind-value="@user.Login"></input>
+    <label>Логин:</label> <input placeholder="Логин" @bind-value="@user.Login" />
     <br /><br />
-    <label>Пароль:</label> <input placeholder="Пароль" @bind-value="@user.Password"></input>
+    <label>Пароль:</label> <input placeholder="Пароль" @bind-value="@user.Password" />
     <br /><br />
-    <label>Email:</label> <input placeholder="Email" @bind-value="@user.Email"></input>
+    <label>Email:</label> <input placeholder="Email" @bind-value="@user.Email" />
     <br /><br />
     <label>Номер:</label> <input placeholder="Номер" @bind-value="@user.PhoneNumber" />
     <br /><br />
@@ -43,7 +42,7 @@
     DeveloperComponent developerComponent;
     DesignerComponent designerComponent;
 
-    private async void AddToDataBase()
+    private async Task AddToDataBase()
     {
 
         if (role == "Заказчик")

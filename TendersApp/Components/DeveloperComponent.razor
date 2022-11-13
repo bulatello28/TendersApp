@@ -24,7 +24,7 @@
 
 @code {
     [Parameter]
-    public Developer currentDeveloper { get; set; }
+    public Developer currentDeveloper { get; set; } = new(); 
 
     private void SaveData()
     {

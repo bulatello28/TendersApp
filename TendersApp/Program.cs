@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using TendersApp.Data;
+using TendersApp.Documents;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<MongoDb>();
+builder.Services.AddSingleton<FileSystemService>();
+builder.Services.AddSingleton<ProjectService>();
+builder.Services.AddSingleton<ListDocuments>();
 
 var app = builder.Build();
 

@@ -6,17 +6,17 @@
         public string LastName { get; set; }
         public string Division { get; set; }
 
-        public Customer(string firstName, string lastName, string email, string phoneNumber,
-            string login, string password, string division, Enums.Roles role)
-            : base(email, phoneNumber, login, password, role)
+        public Customer(string login, string password, string email, string phoneNumber,
+            string firstName, string lastName, string division, Enums.Roles role)
+            : base(login, password, email, phoneNumber, role)
         {
             FirstName = firstName;
             LastName = lastName;
             Division = division;
         }
 
-        public Customer(string email, string phoneNumber,
-            string login, string password, Enums.Roles role) : base(email, phoneNumber, login, password, role)
+        public Customer(string login, string password,
+            string email, string phoneNumber, Enums.Roles role) : base(login, password, email, phoneNumber, role)
         {
 
         }

@@ -8,7 +8,7 @@ namespace TendersApp.Users
     public class User
     {
         [BsonId]
-        public ObjectId _id { get; set; }
+        public ObjectId Id { get; set; }
 
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -16,7 +16,7 @@ namespace TendersApp.Users
         public string Password { get; set; }
         public Roles Role { get; set; }
 
-        public User(string email, string phoneNumber, string login, string password, Roles role)
+        public User(string login, string password, string email, string phoneNumber, Roles role)
         {
             Email = email;
             PhoneNumber = phoneNumber;

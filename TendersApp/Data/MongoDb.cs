@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using TendersApp.Users;
+using TendersApp.Documents;
 
 namespace TendersApp.Data
 {
@@ -56,7 +57,7 @@ namespace TendersApp.Data
             return collection.Find(filter).FirstOrDefault();
         }
 
-        public static Developer CheckLoginForDeveloper(string login)
+        public  Developer CheckLoginForDeveloper(string login)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("Users");
@@ -113,6 +114,87 @@ namespace TendersApp.Data
             var collection = database.GetCollection<Designer>("DesignerCollection");
             collection.ReplaceOne(filter, user);
         }
+
+        public void AddProjectToDataBase(Project project)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Documents");
+            var collection = database.GetCollection<Project>("ProjectCollection");
+            collection.InsertOne(project);
+        }
+
+        public void AddDocumentToDataBase(Document document)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Documents");
+            var collection = database.GetCollection<Document>("DocumentCollection");
+            collection.InsertOne(document);
+        }
+
+        public List<Project> GetProjects()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Documents");
+            return database.GetCollection<Project>("ProjectCollection").Find(new BsonDocument()).ToList();
+        }
+
+        public List<Customer> FindCustomers()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = new BsonDocument();
+            var collection = database.GetCollection<Customer>("CustomerCollection");
+            return collection.Find(filter).ToList();
+        }
+
+        public List<Developer> FindDevelopers()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = new BsonDocument();
+            var collection = database.GetCollection<Developer>("DeveloperCollection");
+            return collection.Find(filter).ToList();
+        }
+
+        public List<Designer> FindProjecters()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = new BsonDocument();
+            var collection = database.GetCollection<Designer>("DesignerCollection");
+            return collection.Find(filter).ToList();
+        }
+
+        public Customer FindCustomerById(ObjectId id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = Builders<Customer>.Filter.Eq("_id", id);
+            var collection = database.GetCollection<Customer>("CustomerCollection");
+            return collection.Find(filter).FirstOrDefault();
+        }
+
+        public Designer FindProjecterById(ObjectId id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = Builders<Designer>.Filter.Eq("_id", id);
+            var collection = database.GetCollection<Designer>("DesignerCollection");
+            return collection.Find(filter).FirstOrDefault();
+        }
+
+        public Developer FindDeveloperById(ObjectId id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("Users");
+            var filter = Builders<Developer>.Filter.Eq("_id", id);
+            var collection = database.GetCollection<Developer>("DeveloperCollection");
+            return collection.Find(filter).FirstOrDefault();
+        }
+
+
+
+
 
 
     }
