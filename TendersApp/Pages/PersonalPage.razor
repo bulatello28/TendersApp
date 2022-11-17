@@ -11,38 +11,43 @@
 
 @if (MongoDb.currentUser?.Role == Enums.Roles.Customer)
 {
-    <p>Логин: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).Login))</p>
-    <p>Имя: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).FirstName))</p>
-    <p>Фамилия: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).LastName))</p>
-    <p>Почта: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).Email))</p>
-    <p>Телефон: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).PhoneNumber))</p>
-    <p>Отдел: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).Division))</p>
-    
+    <div class="user-component">
+    <p style="margin-left: 2%">Логин: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).Login))</p>
+    <p style="margin-left: 2%">Имя: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).FirstName))</p>
+    <p style="margin-left: 2%">Фамилия: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).LastName))</p>
+    <p style="margin-left: 2%">Почта: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).Email))</p>
+    <p style="margin-left: 2%">Телефон: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).PhoneNumber))</p>
+    <p style="margin-left: 2%">Отдел: @((MongoDb.CheckLoginForCustomer(MongoDb.currentUser.Login).Division))</p>
+    </div>
 }
 @if (MongoDb.currentUser?.Role == Enums.Roles.Designer)
 {
-    <p>Логин: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Login))</p>
-    <p>Организация: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Organisation))</p>
-    <p>Почта: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Email))</p>
-    <p>Телефон: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).PhoneNumber))</p>
-    <p>Адрес: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Adress))</p>
-    <p>ОГРН: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Ogrn))</p>
-    <p>ИНН: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Inn))</p>
-    <p>КПП: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Kpp))</p>
-    <p>Директор: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Director))</p>
-    <p>Главный инженер: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).MainEngineer))</p>
+    <div class="user-component">
+    <p style="margin-left: 2%">Логин: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Login))</p>
+    <p style="margin-left: 2%">Организация: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Organisation))</p>
+    <p style="margin-left: 2%">Почта: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Email))</p>
+    <p style="margin-left: 2%">Телефон: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).PhoneNumber))</p>
+    <p style="margin-left: 2%">Адрес: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Adress))</p>
+    <p style="margin-left: 2%">ОГРН: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Ogrn))</p>
+    <p style="margin-left: 2%">ИНН: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Inn))</p>
+    <p style="margin-left: 2%">КПП: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Kpp))</p>
+    <p style="margin-left: 2%">Директор: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).Director))</p>
+    <p style="margin-left: 2%">Главный инженер: @((MongoDb.CheckLoginForDesigner(MongoDb.currentUser.Login).MainEngineer))</p>
+    </div>
 }
 @if (MongoDb.currentUser?.Role == Enums.Roles.Developer)
 {
-    <p>Логин: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Login))</p>
-    <p>Организация: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Organisation))</p>
-    <p>Почта: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Email))</p>
-    <p>Телефон: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).PhoneNumber))</p>
-    <p>Адрес: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Adress))</p>
-    <p>ОГРН: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Ogrn))</p>
-    <p>ИНН: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Inn))</p>  
-    <p>КПП: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Kpp))</p>
-    <p>Директор: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Director))</p>
+    <div class="user-component">
+    <p style="margin-left: 2%">Логин: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Login))</p>
+    <p style="margin-left: 2%">Организация: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Organisation))</p>
+    <p style="margin-left: 2%">Почта: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Email))</p>
+    <p style="margin-left: 2%">Телефон: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).PhoneNumber))</p>
+    <p style="margin-left: 2%">Адрес: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Adress))</p>
+    <p style="margin-left: 2%">ОГРН: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Ogrn))</p>
+    <p style="margin-left: 2%">ИНН: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Inn))</p>  
+    <p style="margin-left: 2%">КПП: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Kpp))</p>
+    <p style="margin-left: 2%">Директор: @((MongoDb.CheckLoginForDeveloper(MongoDb.currentUser.Login).Director))</p>
+</div>
 }
 
 @if (MongoDb.currentUser?.Role == Enums.Roles.Customer)
@@ -61,5 +66,5 @@
 
 
 @code {
-
+    
 }

@@ -9,15 +9,14 @@
 @inject MongoDb MongoDb
 @inject NavigationManager navManager
 
-<div>
+<link rel="stylesheet" href="RegStyle.css" />
+
+<div class="auth-user">
+    <h3 style="color: black;">Авторизация</h3>
 <form onsubmit="@TryFindUser">
-<label>Логин:</label>
+<label>Логин:</label><input placeholder="Логин" style="margin-left: 5%;" @bind-value="@user.Login"/>
 <br /><br />
-<input placeholder="Логин" @bind-value="@user.Login"/>
-<br /><br />
-<label>Пароль:</label>
-<br /><br />
-<input placeholder="Пароль" @bind-value="@user.Password" />
+<label>Пароль:</label><input placeholder="Пароль" style="margin-left: 5%;" type="password" @bind-value="@user.Password" />
 <button type="submit">Sign In</button>
 </form>
 </div>

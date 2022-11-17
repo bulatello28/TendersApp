@@ -3,7 +3,10 @@
 @using TendersApp.Users
 @inject IJSRuntime JsRuntime
 @inject TendersApp.Data.MongoDb MongoDb
-<EditForm Model="@currentCustomer" OnValidSubmit="@(() => SaveData())">
+
+<link rel="stylesheet" href="RegStyle.css" />
+
+<EditForm Model="@currentCustomer" class="user-component" OnValidSubmit="@(() => SaveData())">
 <br /><br />
 <label>Область:</label> <input placeholder="Область" @bind-value="@currentCustomer.Division"></input>
 <br /><br />

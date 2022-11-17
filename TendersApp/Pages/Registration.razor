@@ -7,10 +7,16 @@
 @using TendersApp.Components
 @inject IJSRuntime JsRuntime
 @inject MongoDb MongoDb
-<div class="register-user">
+@inject NavigationManager nManager
+
+<link rel="stylesheet" href="RegStyle.css" />
+
+
+<div class="register-user" >
+    <h3 style="color: black; text-shadow: 1px 1px 1px black;">Регистрация</h3>
     <label>Логин:</label> <input placeholder="Логин" @bind-value="@user.Login" />
     <br /><br />
-    <label>Пароль:</label> <input placeholder="Пароль" @bind-value="@user.Password" />
+    <label>Пароль:</label> <input placeholder="Пароль" type="password" @bind-value="@user.Password" />
     <br /><br />
     <label>Email:</label> <input placeholder="Email" @bind-value="@user.Email" />
     <br /><br />
@@ -23,7 +29,7 @@
         <option value="Застройщик">Застройщик</option>
         <option value="Проектировщик">Проектировщик</option>
     </select>
-    <button type="submit" @onclick="() => AddToDataBase()">Sign Up</button>
+    <button type="submit" style="color" @onclick="() => AddToDataBase()">Sign Up</button>
 </div>
 
 
@@ -44,21 +50,36 @@
 
     private async Task AddToDataBase()
     {
-
+        if (user.PhoneNumber.Length < 11)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "Некорректный телефон");
+            return;
+        }
+        if (!(user.Email.Contains('@')))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "Неккоректная электронная почта");
+            return;
+        }
         if (role == "Заказчик")
         {
             MongoDb.AddCustomerToDataBase(new Customer(user.Login, user.Password, user.Email,
             user.PhoneNumber, Enums.Roles.Customer));
+            await JsRuntime.InvokeVoidAsync("alert", "Пользователь зарегистрирован");
+            nManager.NavigateTo("/authorization");
         }
         else if (role == "Проектировщик")
         {
             MongoDb.AddDesignerToDataBase(new Designer(user.Login, user.Password, user.Email,
             user.PhoneNumber, Enums.Roles.Designer));
+            await JsRuntime.InvokeVoidAsync("alert", "Пользователь зарегистрирован");
+            nManager.NavigateTo("/authorization");
         }
         else if (role == "Застройщик")
         {   
             MongoDb.AddDeveloperToDataBase(new Developer(user.Login, user.Password, user.Email,
             user.PhoneNumber, Enums.Roles.Developer));
+            await JsRuntime.InvokeVoidAsync("alert", "Пользователь зарегистрирован");
+            nManager.NavigateTo("/authorization");
         }
 
     }

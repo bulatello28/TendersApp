@@ -4,7 +4,9 @@
 @inject IJSRuntime JsRuntime
 @inject TendersApp.Data.MongoDb MongoDb
 
-<EditForm Model="@currentDesigner" OnValidSubmit="@(() => SaveData())">
+<link rel="stylesheet" href="RegStyle.css" />
+
+<EditForm Model="@currentDesigner" class="user-component" OnValidSubmit="@(() => SaveData())">
 <br /><br />
 <label>Организация:</label><input placeholder="Организация" @bind-value="currentDesigner.Organisation" />
 <br /><br />

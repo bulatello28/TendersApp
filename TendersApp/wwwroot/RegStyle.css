@@ -1,0 +1,27 @@
+﻿.register-user {
+    background: linear-gradient(45deg, #700d91, #083aaf);
+    margin-left: 30%;
+    margin-top: 10%;
+    width: 450px;
+    height: 300px;
+    color: #eaeaea;
+    font-family:'Courier New';
+    border: 3px solid black;
+}
+
+.auth-user {
+    background: linear-gradient(45deg, #700d91, #083aaf);
+    margin-left: 30%;
+    margin-top: 10%;
+    width: 450px;
+    height: 200px;
+    color: #eaeaea;
+    font-family: 'Courier New';
+    border: 6px solid black;
+}
+
+.user-component {
+    border: 3px solid black;
+    background-color: #b790e6;
+    font-family: 'Courier New';
+}
