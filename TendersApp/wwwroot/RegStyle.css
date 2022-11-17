@@ -25,3 +25,7 @@
     background-color: #b790e6;
     font-family: 'Courier New';
 }
+
+.btn btn-primary mb-3 {
+    background-color: #cc3af6
+}

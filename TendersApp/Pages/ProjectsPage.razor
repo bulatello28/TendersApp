@@ -82,7 +82,7 @@
                     <td>@project.Name</td>
                     <td>@mongoConnection.FindProjecterById(project.DesignerId).Organisation</td>
                     <td>@mongoConnection.FindDeveloperById(project.DeveloperId).Organisation</td>
-                    <td><button class="btn btn-primary mb-3" onclick="@(() => GoToCreatedProject(project))">Go to project</button></td>
+                    <td><button class="btn btn-primary mb-3" onclick="@(() => GoToCreatedProject(project))">Добавить новый проект</button></td>
                 </tr>
             }
             </tbody>
